@@ -1,0 +1,3957 @@
+{
+  "info": {
+    "_postman_id": "798e3865-1dcf-4c4d-b013-e6bc99cfdb83",
+    "name": "demo_api_tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "23222523"
+  },
+  "item": [
+    {
+      "name": "GET resources",
+      "item": [
+        {
+          "name": "Verify GET /POSTS request",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// @allure.label.suite=GET_POSTS",
+                  "//  @allure.id=1",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a non-empty list\", function () {",
+                  "    let jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.not.empty;",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item).to.be.an('object');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Verify each list object has id, userId, title, body fields\", function () {",
+                  "    let jsonData = pm.response.json();",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object's field has correct data type\", function () {",
+                  "    let jsonData = pm.response.json();",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item.id).to.be.a('number').that.is.not.below(0);",
+                  "        pm.expect(item.userId).to.be.a('number').that.is.not.below(0);",
+                  "        pm.expect(item.title).to.be.a('string').that.is.not.empty;",
+                  "        pm.expect(item.body).to.be.a('string').that.is.not.empty;",
+                  "    });",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with unknown parameter",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// @allure.label.suite=GET_POSTS",
+                  "//  @allure.id=1",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a non-empty list\", function () {",
+                  "    let jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.not.empty;",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item).to.be.an('object');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Verify each list object has id, userId, title, body fields\", function () {",
+                  "    let jsonData = pm.response.json();",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object's field has correct data type\", function () {",
+                  "    let jsonData = pm.response.json();",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item.id).to.be.a('number').that.is.not.below(0);",
+                  "        pm.expect(item.userId).to.be.a('number').that.is.not.below(0);",
+                  "        pm.expect(item.title).to.be.a('string').that.is.not.empty;",
+                  "        pm.expect(item.body).to.be.a('string').that.is.not.empty;",
+                  "    });",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?unknownParam=true",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "unknownParam",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with all params from same item",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 1 item\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(1);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response list item is an object\", function () {",
+                  "    pm.expect(jsonData[0]).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object has id, userId, title, body fields\", function () {",
+                  "    pm.expect(jsonData[0]).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object's field has correct data type\", function () {",
+                  "    pm.expect(jsonData[0].id).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData[0].userId).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData[0].title).to.be.a('string').that.is.not.empty;",
+                  "    pm.expect(jsonData[0].body).to.be.a('string').that.is.not.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=1&userId=1&title=sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "1"
+                },
+                {
+                  "key": "userId",
+                  "value": "1"
+                },
+                {
+                  "key": "title",
+                  "value": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with all params from different items",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 1 item\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=1&userId=2&title=qui est esse",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "1"
+                },
+                {
+                  "key": "userId",
+                  "value": "2"
+                },
+                {
+                  "key": "title",
+                  "value": "qui est esse"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request ID, USERID match item, TITLE not",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 1 item\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=1&userId=1&title=qui est esse",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "1"
+                },
+                {
+                  "key": "userId",
+                  "value": "1"
+                },
+                {
+                  "key": "title",
+                  "value": "qui est esse"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request ID, TITLE match item, USERID not",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 1 item\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=1&userId=10&title=sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "1"
+                },
+                {
+                  "key": "userId",
+                  "value": "10"
+                },
+                {
+                  "key": "title",
+                  "value": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request USERID, TITLE match item, ID not",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 1 item\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=100&userId=1&title=sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "100"
+                },
+                {
+                  "key": "userId",
+                  "value": "1"
+                },
+                {
+                  "key": "title",
+                  "value": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with valid TITLE param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 1 item\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(1);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response list item is an object\", function () {",
+                  "    pm.expect(jsonData[0]).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object has id, userId, title, body fields\", function () {",
+                  "    pm.expect(jsonData[0]).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object's field has correct data type\", function () {",
+                  "    pm.expect(jsonData[0].id).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData[0].userId).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData[0].title).to.be.a('string').that.is.not.empty;",
+                  "    pm.expect(jsonData[0].body).to.be.a('string').that.is.not.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?title=qui est esse",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "title",
+                  "value": "qui est esse"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with partial matched TITLE param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is an empty list\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?title=qui",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "title",
+                  "value": "qui"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with empty TITLE param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is an empty list\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?title=",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "title",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with USERID=1 param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with at least 1 item\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.length.above(1);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response list item is an object\", function () {",
+                  "    pm.expect(jsonData[0]).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object has id, userId, title, body fields\", function () {",
+                  "    pm.expect(jsonData[0]).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object's field has correct data type\", function () {",
+                  "    pm.expect(jsonData[0].id).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData[0].userId).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData[0].title).to.be.a('string').that.is.not.empty;",
+                  "    pm.expect(jsonData[0].body).to.be.a('string').that.is.not.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?userId=1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with USERID=5 param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with at least 1 item\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.length.above(1);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response list item is an object\", function () {",
+                  "    pm.expect(jsonData[0]).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object has id, userId, title, body fields\", function () {",
+                  "    pm.expect(jsonData[0]).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object's field has correct data type\", function () {",
+                  "    pm.expect(jsonData[0].id).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData[0].userId).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData[0].title).to.be.a('string').that.is.not.empty;",
+                  "    pm.expect(jsonData[0].body).to.be.a('string').that.is.not.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?userId=5",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with USERID=10 param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with at least 1 item\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.length.above(1);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response list item is an object\", function () {",
+                  "    pm.expect(jsonData[0]).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object has id, userId, title, body fields\", function () {",
+                  "    pm.expect(jsonData[0]).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object's field has correct data type\", function () {",
+                  "    pm.expect(jsonData[0].id).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData[0].userId).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData[0].title).to.be.a('string').that.is.not.empty;",
+                  "    pm.expect(jsonData[0].body).to.be.a('string').that.is.not.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?userId=10",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with USERID=0 param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 0 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?userId=0",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "0"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with USERID=-1 param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 0 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?userId=-1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "-1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with USERID=test",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 0 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=test",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "test"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with USERID=11 param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 0 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?userId=11",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "11"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with USERID=999 param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 0 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?userId=999",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "999"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with empty USERID param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 0 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?userId=",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with USERIDs 1, 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 2 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(20);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a non-empty list\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.not.empty;",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item).to.be.an('object');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Verify each list object has id, userId, title, body fields\", function () {",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object's field has correct data type\", function () {",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item.id).to.be.a('number').that.is.not.below(0);",
+                  "        pm.expect(item.userId).to.be.a('number').that.is.not.below(0);",
+                  "        pm.expect(item.title).to.be.a('string').that.is.not.empty;",
+                  "        pm.expect(item.body).to.be.a('string').that.is.not.empty;",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?userId=1&userId=2",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "1"
+                },
+                {
+                  "key": "userId",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with USERIDs 5, 10",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 2 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(20);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a non-empty list\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.not.empty;",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item).to.be.an('object');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Verify each list object has id, userId, title, body fields\", function () {",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object's field has correct data type\", function () {",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item.id).to.be.a('number').that.is.not.below(0);",
+                  "        pm.expect(item.userId).to.be.a('number').that.is.not.below(0);",
+                  "        pm.expect(item.title).to.be.a('string').that.is.not.empty;",
+                  "        pm.expect(item.body).to.be.a('string').that.is.not.empty;",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?userId=5&userId=10",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "5"
+                },
+                {
+                  "key": "userId",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with USERIDs 10, 999",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 1 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(10);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a non-empty list\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.not.empty;",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item).to.be.an('object');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Verify each list object has id, userId, title, body fields\", function () {",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object's field has correct data type\", function () {",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item.id).to.be.a('number').that.is.not.below(0);",
+                  "        pm.expect(item.userId).to.be.a('number').that.is.not.below(0);",
+                  "        pm.expect(item.title).to.be.a('string').that.is.not.empty;",
+                  "        pm.expect(item.body).to.be.a('string').that.is.not.empty;",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?userId=10&userId=999",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "10"
+                },
+                {
+                  "key": "userId",
+                  "value": "999"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with USERIDs 666, 999",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is an empty list\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.empty;",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?userId=666&userId=999",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "666"
+                },
+                {
+                  "key": "userId",
+                  "value": "999"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with IDs 666, 999",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is an empty list\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.empty;",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=666&id=999",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "666"
+                },
+                {
+                  "key": "id",
+                  "value": "999"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with ID=1 param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 1 item\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(1);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response list item is an object\", function () {",
+                  "    pm.expect(jsonData[0]).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object has id, userId, title, body fields\", function () {",
+                  "    pm.expect(jsonData[0]).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object's field has correct data type\", function () {",
+                  "    pm.expect(jsonData[0].id).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData[0].userId).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData[0].title).to.be.a('string').that.is.not.empty;",
+                  "    pm.expect(jsonData[0].body).to.be.a('string').that.is.not.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with ID=50 param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 1 item\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(1);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response list item is an object\", function () {",
+                  "    pm.expect(jsonData[0]).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object has id, userId, title, body fields\", function () {",
+                  "    pm.expect(jsonData[0]).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object's field has correct data type\", function () {",
+                  "    pm.expect(jsonData[0].id).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData[0].userId).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData[0].title).to.be.a('string').that.is.not.empty;",
+                  "    pm.expect(jsonData[0].body).to.be.a('string').that.is.not.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=50",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "50"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with ID=100 param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 1 item\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(1);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response list item is an object\", function () {",
+                  "    pm.expect(jsonData[0]).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object has id, userId, title, body fields\", function () {",
+                  "    pm.expect(jsonData[0]).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object's field has correct data type\", function () {",
+                  "    pm.expect(jsonData[0].id).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData[0].userId).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData[0].title).to.be.a('string').that.is.not.empty;",
+                  "    pm.expect(jsonData[0].body).to.be.a('string').that.is.not.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=100",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "100"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with ID=0 param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 0 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=0",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "0"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with ID=-1 param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 0 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=-1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "-1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with ID=test param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 0 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=test",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "test"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with ID=101 param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 0 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=101",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "101"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with ID=999 param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 0 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=999",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "999"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with empty ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 0 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with IDs 1, 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 2 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(2);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a non-empty list\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.not.empty;",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item).to.be.an('object');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Verify each list object has id, userId, title, body fields\", function () {",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object's field has correct data type\", function () {",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item.id).to.be.a('number').that.is.not.below(0);",
+                  "        pm.expect(item.userId).to.be.a('number').that.is.not.below(0);",
+                  "        pm.expect(item.title).to.be.a('string').that.is.not.empty;",
+                  "        pm.expect(item.body).to.be.a('string').that.is.not.empty;",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=1&id=2",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "1"
+                },
+                {
+                  "key": "id",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with IDs 50, 100",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 2 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(2);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a non-empty list\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.not.empty;",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item).to.be.an('object');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Verify each list object has id, userId, title, body fields\", function () {",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object's field has correct data type\", function () {",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item.id).to.be.a('number').that.is.not.below(0);",
+                  "        pm.expect(item.userId).to.be.a('number').that.is.not.below(0);",
+                  "        pm.expect(item.title).to.be.a('string').that.is.not.empty;",
+                  "        pm.expect(item.body).to.be.a('string').that.is.not.empty;",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=50&id=100",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "50"
+                },
+                {
+                  "key": "id",
+                  "value": "100"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify GET /POSTS request with IDs 10, 999",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a list with 1 items\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(1);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is a non-empty list\", function () {",
+                  "    pm.expect(jsonData).to.be.an('array').that.is.not.empty;",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item).to.be.an('object');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Verify each list object has id, userId, title, body fields\", function () {",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Verify list object's field has correct data type\", function () {",
+                  "    jsonData.forEach((item) => {",
+                  "        pm.expect(item.id).to.be.a('number').that.is.not.below(0);",
+                  "        pm.expect(item.userId).to.be.a('number').that.is.not.below(0);",
+                  "        pm.expect(item.title).to.be.a('string').that.is.not.empty;",
+                  "        pm.expect(item.body).to.be.a('string').that.is.not.empty;",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts?id=10&id=999",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "10"
+                },
+                {
+                  "key": "id",
+                  "value": "999"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "POST resource",
+      "item": [
+        {
+          "name": "Verify create post option",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Verify response object has id, userId, title, body fields\", function () {",
+                  "        pm.expect(jsonData).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify response object's field has correct data type\", function () {",
+                  "    pm.expect(jsonData.id).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData.userId).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData.title).to.be.a('string').that.is.not.empty;",
+                  "    pm.expect(jsonData.body).to.be.a('string').that.is.not.empty;",
+                  "    ",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"test title\",\n    \"body\": \"test body\",\n    \"userId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify post can't be created with empty body",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify post can't be created without userId field",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"test title\",\n    \"body\": \"test body\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify post can't be created without title field",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"body\": \"test body\",\n    \"userId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify post can't be created without body field",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"test title\",\n    \"userId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify post can't be created with invalid userId: string",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"test title\",\n    \"body\": \"test body\",\n    \"userId\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify post can't be created with invalid userId: number as string",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"test title\",\n    \"body\": \"test body\",\n    \"userId\": \"1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify post can't be created with invalid userId: does not exist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"test title\",\n    \"body\": \"test body\",\n    \"userId\": 999\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify post can't be created with invalid userId: empty",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"test title\",\n    \"body\": \"test body\",\n    \"userId\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify post can't be created with invalid userId: null",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"test title\",\n    \"body\": \"test body\",\n    \"userId\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify post can't be created with invalid title: empty",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"\",\n    \"body\": \"test body\",\n    \"userId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify post can't be created with invalid title: wrong type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": 123,\n    \"body\": \"test body\",\n    \"userId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify post can't be created with invalid title: null",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": null,\n    \"body\": \"test body\",\n    \"userId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify post can't be created with invalid body: empty",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"body\": \"\",\n    \"title\": \"test title\",\n    \"userId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify post can't be created with invalid body: wrong type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"test title\",\n    \"body\": 123,\n    \"userId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify post can't be created with invalid body: null",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"test title\",\n    \"body\": null,\n    \"userId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify post can't be created with unknown fields",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"test title\",\n    \"body\": \"test body\",\n    \"userId\": 1,\n    \"testField\": \"testValue\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "DELETE resource",
+      "item": [
+        {
+          "name": "Verify delete post option",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Response is an empty object\", function () {",
+                  "    pm.expect(jsonData).to.be.an('object').that.is.empty;",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify delete post option with invalid ID: does not exist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 404\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts/999",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify delete post option with invalid ID: invalid",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts/test",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "test"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "PATCH resource",
+      "item": [
+        {
+          "name": "Verify patch post option: all fields",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Verify response object has id, userId, title, body fields\", function () {",
+                  "        pm.expect(jsonData).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify response object's field has correct data type\", function () {",
+                  "    pm.expect(jsonData.id).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData.userId).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData.title).to.be.a('string').that.is.not.empty;",
+                  "    pm.expect(jsonData.body).to.be.a('string').that.is.not.empty;",
+                  "    ",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"test title\",\n    \"body\": \"test body\",\n    \"userId\": 1000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify patch post option: title only",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Verify response object has id, userId, title, body fields\", function () {",
+                  "        pm.expect(jsonData).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify response object's field has correct data type\", function () {",
+                  "    pm.expect(jsonData.id).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData.userId).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData.title).to.be.a('string').that.is.not.empty;",
+                  "    pm.expect(jsonData.body).to.be.a('string').that.is.not.empty;",
+                  "    ",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"test title\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify patch post option: body only",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Verify response object has id, userId, title, body fields\", function () {",
+                  "        pm.expect(jsonData).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify response object's field has correct data type\", function () {",
+                  "    pm.expect(jsonData.id).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData.userId).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData.title).to.be.a('string').that.is.not.empty;",
+                  "    pm.expect(jsonData.body).to.be.a('string').that.is.not.empty;",
+                  "    ",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"body\": \"test body\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify patch post option: userId only",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Verify response object has id, userId, title, body fields\", function () {",
+                  "        pm.expect(jsonData).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify response object's field has correct data type\", function () {",
+                  "    pm.expect(jsonData.id).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData.userId).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData.title).to.be.a('string').that.is.not.empty;",
+                  "    pm.expect(jsonData.body).to.be.a('string').that.is.not.empty;",
+                  "    ",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"userId\": 1000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify resource can't be patched with empty body",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify resource can't be patched with invalid title: empty",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify resource can't be patched with invalid title: null",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify resource can't be patched with invalid title: wrong type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": 123\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify resource can't be patched with invalid body: empty",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"body\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify resource can't be patched with invalid body: null",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"body\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify resource can't be patched with invalid body: wrong type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"body\": 123\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify resource can't be patched with invalid field",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"unknownField\": 123\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify not existing resource PATCH status code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 404\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"body\": 123\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/999",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "999"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "PUT resource",
+      "item": [
+        {
+          "name": "Verify update post option",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Verify Content-Type is application/json; charset=utf-8\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Verify response object has id, userId, title, body fields\", function () {",
+                  "        pm.expect(jsonData).to.have.all.keys('id', 'userId', 'title', 'body');",
+                  "});",
+                  "",
+                  "pm.test(\"Verify response object's field has correct data type\", function () {",
+                  "    pm.expect(jsonData.id).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData.userId).to.be.a('number').that.is.not.below(0);",
+                  "    pm.expect(jsonData.title).to.be.a('string').that.is.not.empty;",
+                  "    pm.expect(jsonData.body).to.be.a('string').that.is.not.empty;",
+                  "    ",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"test title\",\n    \"body\": \"test body\",\n    \"userId\": 1000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify resource can't be updated with empty body",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify resource can't be updated with missed field: userId",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"new title\",\n    \"body\": \"new body\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify resource can't be updated with missed field: title",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"userId\": 2,\n    \"body\": \"new body\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify resource can't be updated with missed field: body",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"userId\": 2,\n    \"title\": \"new title\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify resource can't be updated with wrong type field: userId",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"userId\": \"str\",\n    \"title\": \"new title\",\n    \"body\": \"new body\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify resource can't be updated with wrong type field: title",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"userId\": 2,\n    \"title\": 123,\n    \"body\": \"new body\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify resource can't be updated with wrong type field: body",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Verify Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"userId\": 2,\n    \"title\": \"new title\",\n    \"body\": 123\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/posts/1",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "NOT_ALLOWED requests",
+      "item": [
+        {
+          "name": "Verify DELEPE /POSTS request not allowed",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Verify Status code is 405\", function () {",
+                  "    pm.response.to.have.status(405);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify PUT /POSTS request not allowed",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Verify Status code is 405\", function () {",
+                  "    pm.response.to.have.status(405);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify PATCH /POSTS request not allowed",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Verify Status code is 405\", function () {",
+                  "    pm.response.to.have.status(405);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/posts",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
